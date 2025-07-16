@@ -15,7 +15,6 @@ const NavBar = () => {
           <NavLink
             className={({ isActive }) => (isActive ? style.active : '')}
             to={'/'}>Home</NavLink>
-
         </li>
         <li>
           <NavLink
