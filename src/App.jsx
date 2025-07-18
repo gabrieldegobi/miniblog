@@ -11,25 +11,54 @@ import Login from './pages/Login/Login'
 import Register from './pages/Register/Register'
 
 
+
+import { AuthProvider } from './context/AuthContext'
+import { onAuthStateChanged } from 'firebase/auth'
+import { useEffect, useState } from 'react'
+import { useAuthentication } from './hooks/useAuthentication'
+
+
+
+
+
+
 function App() {
 
+  //pegando o usuário
+  const [user, setUser] = useState(undefined)
+  const { auth } = useAuthentication()
+
+
+  useEffect(()=>{
+    onAuthStateChanged(auth,(user)=>{
+
+      setUser(user)
+
+    })
+  },[auth])
+
+  //para que dê tempo de a api buscar o usuário
+  const loadingUser = user === undefined
+  if (loadingUser) {
+    return <p>Carregando...</p>
+  }
 
   return (
     <div>
-      <BrowserRouter>
-      <NavBar/>
-        <div className="container">
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/about' element={<About />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
-
-
-          </Routes>
-        </div>
-        <Footer/>
-      </BrowserRouter>
+      <AuthProvider value={{user}}>
+        <BrowserRouter>
+          <NavBar />
+          <div className="container">
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='/about' element={<About />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
+            </Routes>
+          </div>
+          <Footer />
+        </BrowserRouter>
+      </AuthProvider>
     </div>
 
   )
