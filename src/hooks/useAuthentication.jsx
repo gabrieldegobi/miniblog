@@ -34,7 +34,7 @@ export const useAuthentication = () => {
         checkIfIsCancelled()
 
         setLoading(true)
-        setError(null)
+        setError()
 
         try {
             //criando usuário
@@ -49,15 +49,8 @@ export const useAuthentication = () => {
             await updateProfile(user, {
                 displayName: data.displayName
             })
-
-
-
-
             setLoading(false)
             return user
-
-
-
 
         } catch (error) {
             console.log(error.message)
@@ -71,8 +64,8 @@ export const useAuthentication = () => {
                 systemErrorMessage = "A senha precisa conter pelo menos 6 caracteres"
             } else if (error.message.includes('email-already')) {
                 systemErrorMessage = "Email já cadastrado."
-            }else if(error.message.includes('invalid-email')){
-                systemErrorMessage="Email-invalido"
+            } else if (error.message.includes('invalid-email')) {
+                systemErrorMessage = "Email-invalido"
             } else {
                 systemErrorMessage = "ocorreu um erro, por favor tente mais tarde."
             }
@@ -82,10 +75,45 @@ export const useAuthentication = () => {
         }
     }
 
+    //logout  -  sign out
+    const logout = () => {
+        checkIfIsCancelled()
+        signOut(auth)
+    }
+
+    //login  - sign in
+
+    const login = async (data) => {
+        checkIfIsCancelled()
+        setLoading(true)
+        setError(false)
+
+        try {
+            await signInWithEmailAndPassword(
+                auth,
+                data.email,
+                data.password)
+            setLoading(false)
+
+        } catch (error) {
+
+            let systemErrorMessage
+
+            if (error.message.includes('auth/invalid-credential')) {
+                systemErrorMessage = "Credencial invalida, verifique O E-mail e Senha."
+            } 
+            setError(systemErrorMessage)
+            setLoading(false)
+
+        }
+
+
+    }
+
     useEffect(() => setCancelled(true), [])
 
     return {
-        auth, createUser, error, loading
+        auth, createUser, error, loading, logout, login
     }
 
 }

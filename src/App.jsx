@@ -9,6 +9,8 @@ import NavBar from './components/NavBar/NavBar'
 import Footer from './components/Footer/Footer'
 import Login from './pages/Login/Login'
 import Register from './pages/Register/Register'
+import Dashboard from './pages/Dashboard/Dashboard'
+import CreatePost from './pages/CreatePost/CreatePost'
 
 
 
@@ -29,13 +31,13 @@ function App() {
   const { auth } = useAuthentication()
 
 
-  useEffect(()=>{
-    onAuthStateChanged(auth,(user)=>{
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
 
       setUser(user)
 
     })
-  },[auth])
+  }, [auth])
 
   //para que dê tempo de a api buscar o usuário
   const loadingUser = user === undefined
@@ -45,15 +47,32 @@ function App() {
 
   return (
     <div>
-      <AuthProvider value={{user}}>
+      <AuthProvider value={{ user }}>
         <BrowserRouter>
           <NavBar />
           <div className="container">
             <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path='/about' element={<About />} />
-              <Route path='/login' element={<Login />} />
-              <Route path='/register' element={<Register />} />
+              <Route path='/' element={<Home />}
+              />
+              <Route path='/about' element={<About />}
+              />
+              <Route
+                path='/login'
+                //colocando impedimento para que o usuario nao consiga entar nessa pagina enquanto logado
+                element={!user ? <Login /> : <Navigate to="/" />}
+              />
+              <Route
+                path='/register'
+                element={!user ? <Register /> : <Navigate to="/" />}
+              />
+              <Route
+                path='/dashboard'
+                element={user ? <Dashboard /> : <Navigate to="/" />}
+              />
+              <Route
+                path='/posts/create'
+                element={user ? <CreatePost /> : <Navigate to="/" />}
+              />
             </Routes>
           </div>
           <Footer />
