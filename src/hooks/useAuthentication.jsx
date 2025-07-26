@@ -21,7 +21,7 @@ export const useAuthentication = () => {
     const [cancelled, setCancelled] = useState(false)
 
     const auth = getAuth()
-
+    console.log(auth)
 
     function checkIfIsCancelled() {
         if (cancelled) {
@@ -101,7 +101,7 @@ export const useAuthentication = () => {
 
             if (error.message.includes('auth/invalid-credential')) {
                 systemErrorMessage = "Credencial invalida, verifique O E-mail e Senha."
-            } 
+            }
             setError(systemErrorMessage)
             setLoading(false)
 
