@@ -32,7 +32,7 @@ const CreatePost = () => {
       image,
       body,
       tags,
-      uid: user.id,
+      uid: user.uid,
       createdBy: user.displayName
     })
     console.log({
@@ -92,10 +92,9 @@ const CreatePost = () => {
             value={tags}
           />
         </label>
-        <button className='btn'>Cadastrar</button>
-        {/*!response.loading && <button className='btn'>Cadastrar</button>}
+        {!response.loading && <button className='btn'>Cadastrar</button>}
         {response.loading && <button className='btn'>Cadastrar...</button>}
-        {response.error && <p className='error'>{response.error}</p>*/}
+        {response.error && <p className='error'>{response.error}</p>}
       </form>
     </div>
   )
