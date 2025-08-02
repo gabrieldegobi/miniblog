@@ -49,6 +49,7 @@ const CreatePost = () => {
       uid: user.uid,
       createdBy: user.displayName
     })
+    
 
     //Redirect to home page
     navegate("/")
@@ -103,7 +104,6 @@ const CreatePost = () => {
         {!response.loading && <button className='btn'>Cadastrar</button>}
         {response.loading && <button className='btn'>Cadastrar...</button>}
         {response.error && <p className='error'>{response.error}</p>}
-        {formError && <p className='error'>{formError}</p>}
       </form>
     </div>
   )
