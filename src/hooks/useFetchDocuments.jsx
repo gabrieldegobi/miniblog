@@ -33,10 +33,19 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
 
                 //pegar todos os dados pela ondem de criação decrescente
                 //criando a busca de dados mais simples, pegando os dados pela ordem de criação decrescente
-                q = await query(
-                    collectionRef,
-                    orderBy("createAt", "desc")
-                );
+
+                if (search) {
+                    //array-contains  -- parâmetro
+                    //para fazer o filtro de busca
+                    q = await query(
+                        collectionRef,//pega a coleção
+                        where("tags", "array-contains", search),//como as tags sao array, temos o acesso a um parametro do firebase
+                        orderBy("createAt", "desc"))//aqui somente colocamos em ordem
+                } else {
+                    q = await query(
+                        collectionRef,
+                        orderBy("createAt", "desc"));
+                }
 
                 //mapear meus dados, sempre que for alterado, ele irá trazer esse dado novamente
                 await onSnapshot(q, (querySnapshot) => {

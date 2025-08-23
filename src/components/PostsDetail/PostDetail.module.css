@@ -1,27 +1,29 @@
-.post_detail{
+.post_detail {
     margin-bottom: 2em;
 }
-.post_detail img{
-    max-width: 600px;    
+
+.post_detail img {
+    max-width: 600px;
 }
-.post_detail h2{
+
+.post_detail h2 {
     margin-bottom: .4em;
 }
 
-.post_detail .tags{
+.post_detail .tags {
     margin-bottom: 1.2em;
     display: flex;
 }
 
-.tags p{
+.tags p {
     margin-right: .5em;
 }
 
-.tags span{
+.tags span {
     font-weight: bold;
 }
 
-.createdby{
+.createdby {
     font-style: italic;
     color: #444;
     font-size: .8em;
