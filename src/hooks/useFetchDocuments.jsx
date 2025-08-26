@@ -39,7 +39,8 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
                     //para fazer o filtro de busca
                     q = await query(
                         collectionRef,//pega a coleção
-                        where("tags", "array-contains", search),//como as tags sao array, temos o acesso a um parametro do firebase
+                        where("tags", "array-contains", search),//were('onde se fara a busca','metodo','o que estou buscando')
+                        //como as tags sao array, temos o acesso a um parametro do firebase
                         orderBy("createAt", "desc"))//aqui somente colocamos em ordem
                 } else {
                     q = await query(
