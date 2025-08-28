@@ -19,6 +19,7 @@ import { AuthProvider } from './context/AuthContext'
 import { onAuthStateChanged } from 'firebase/auth'
 import { useEffect, useState } from 'react'
 import { useAuthentication } from './hooks/useAuthentication'
+import Post from './pages/Post/Post'
 
 
 
@@ -58,6 +59,8 @@ function App() {
               <Route path='/about' element={<About />}
               />
               <Route path='/search' element={<Search />}
+              />
+              <Route path='/post/:id' element={<Post />}
               />
               <Route
                 path='/login'
