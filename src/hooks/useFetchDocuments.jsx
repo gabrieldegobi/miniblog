@@ -66,7 +66,7 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
             }
         }
         loadData();
-    }, [docCollection, search, uid, cancelled]);
+    }, [documents,docCollection, search, uid, cancelled]);
 
     //limpeza de memoria
     //nao vai carregando os dados desse componente quando ele carregar

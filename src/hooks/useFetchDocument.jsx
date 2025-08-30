@@ -6,7 +6,7 @@ import {
 
 import { db } from "../firebase/config";
 
-export const useFetchDocument = (docCollection) => {
+export const useFetchDocument = (docCollection,id) => {
     const [document, setDocument] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -22,11 +22,23 @@ export const useFetchDocument = (docCollection) => {
 
             setLoading(true);
 
-            
+            try {
+                //pegar uma referencia do documento
+                const docRef = await doc(db,docCollection,id)
+                //achamos a referencia agora temos que pegar um snap
+                const docSnap = await getDoc(docRef)
+
+                setDocument(docSnap.data())
+                
+                setLoading(false)
+            } catch (error) {
+                setError(erro.message)
+                setLoading(false)
+            }
 
         }
         loadDocument();
-    }, [docCollection, search, uid, cancelled]);
+    }, [docCollection, id]);
 
     //limpeza de memoria
     //nao vai carregando os dados desse componente quando ele carregar
