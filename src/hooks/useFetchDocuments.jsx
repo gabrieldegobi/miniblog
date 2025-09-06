@@ -42,6 +42,11 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
                         where("tagsArray", "array-contains", search),//were('onde se fara a busca','metodo','o que estou buscando')
                         //como as tags sao array, temos o acesso a um parametro do firebase
                         orderBy("createAt", "desc"))//aqui somente colocamos em ordem
+                } else if (uid) {
+                    q = await query(
+                        collectionRef,
+                        where("uid", "==", uid),
+                        orderBy("createAt", "desc"))
                 } else {
                     q = await query(
                         collectionRef,
@@ -66,7 +71,7 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
             }
         }
         loadData();
-    }, [documents,docCollection, search, uid, cancelled]);
+    }, [ docCollection, search, uid, cancelled]);
 
     //limpeza de memoria
     //nao vai carregando os dados desse componente quando ele carregar

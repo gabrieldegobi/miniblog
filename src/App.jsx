@@ -62,6 +62,7 @@ function App() {
               />
               <Route path='/post/:id' element={<Post />}
               />
+
               <Route
                 path='/login'
                 //colocando impedimento para que o usuario nao consiga entar nessa pagina enquanto logado
@@ -77,6 +78,14 @@ function App() {
               />
               <Route
                 path='/posts/create'
+                element={user ? <CreatePost /> : <Navigate to="/" />}
+              />
+              <Route
+                path='/posts/create'
+                element={user ? <CreatePost /> : <Navigate to="/" />}
+              />
+              <Route
+                path='/posts/edit/:id'
                 element={user ? <CreatePost /> : <Navigate to="/" />}
               />
             </Routes>
