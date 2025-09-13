@@ -19,7 +19,10 @@ import { AuthProvider } from './context/AuthContext'
 import { onAuthStateChanged } from 'firebase/auth'
 import { useEffect, useState } from 'react'
 import { useAuthentication } from './hooks/useAuthentication'
+
+
 import Post from './pages/Post/Post'
+import EditPost from './pages/EditPost/EditPost'
 
 
 
@@ -86,7 +89,7 @@ function App() {
               />
               <Route
                 path='/posts/edit/:id'
-                element={user ? <CreatePost /> : <Navigate to="/" />}
+                element={user ? <EditPost /> : <Navigate to="/" />}
               />
             </Routes>
           </div>

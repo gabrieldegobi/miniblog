@@ -1,18 +1,18 @@
 import { useEffect, useReducer, useState } from "react";
 
 import { db } from '../firebase/config'
-import { doc, deleteDoc } from "firebase/firestore";
+import { updateDoc,doc } from "firebase/firestore";
 
 const initialState = {
     loading: null,
     error: null
 }
 
-const deletedReducer = (state, action) => {
+const updateReducer = (state, action) => {
     switch (action.type) {
         case 'LOADING':
             return { loading: true, error: null }
-        case 'DELETED_DOC':
+        case 'UPDATED_DOC':
             return { loading: false, error: null }
         case 'ERROR':
             return { loading: false, error: error.payload }
@@ -21,8 +21,8 @@ const deletedReducer = (state, action) => {
     }
 }
 
-export const useDeleteDocument = (docCollection) => {
-    const [response, dispath] = useReducer(deletedReducer, initialState)
+export const useUpdateDocument = (docCollection) => {
+    const [response, dispath] = useReducer(updateReducer, initialState)
 
     //deal witj memory leak
     const [cancelled, setCancelled] = useState(false)
@@ -33,17 +33,20 @@ export const useDeleteDocument = (docCollection) => {
         }
     }
 
-    const deleteDocument = async (id) => {
+    const updateDocument = async (id,data) => {
         checkCancelBeforeDispath({
             type: 'LOADING',
         })
 
         try {
-            const deletedDocument = await deleteDoc(doc(db,docCollection, id))//REF DO DOCUMENTO
+            
+            const docRef = await doc(db,docCollection,id)
+
+            const updatedDocument = await updateDoc(docRef,data)
 
             checkCancelBeforeDispath({
-                type: 'DELETED_DOC',
-                payload: deleteDocument
+                type: 'UPDATED_DOC',
+                payload: updateDoc
             })
 
         } catch (error) {
@@ -57,6 +60,6 @@ export const useDeleteDocument = (docCollection) => {
     /*useEffect(() => {
         return () => setCancelled(true)
     }, [])
-    */
-    return { deleteDocument, response }
+*/
+    return { updateDocument, response }
 }

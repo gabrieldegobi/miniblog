@@ -3,13 +3,16 @@ import style from './dashboard.module.css'
 
 import { useAuthValue } from '../../context/AuthContext'  //para pegarmos os dados do usuário
 import { useFetchDocuments } from '../../hooks/useFetchDocuments' //para pegarmos os itens do usuário
+import { useDeleteDocument } from '../../hooks/useDeleteDocument'
 
 const Dashboard = () => {
     const { user } = useAuthValue() //Pegando os dados do usuário
     const uid = user.uid //Pegando o ID do usuário
     const { documents: posts, loading, error } = useFetchDocuments('posts', null, uid)
 
-    const deleteDocument = (id) => { }
+    const {deleteDocument,response} = useDeleteDocument('posts')
+
+  
 
     if(loading){
         return <p>Carregando...</p>
@@ -43,7 +46,7 @@ const Dashboard = () => {
                                 Editar
                             </Link>
                             <button onClick={() => deleteDocument(post.id)} className='btn btn-outline btn-danger'>
-                                Excluir
+                                {response.loading?'Excluindo':'Excluir'}
                             </button>
                         </div>
 
